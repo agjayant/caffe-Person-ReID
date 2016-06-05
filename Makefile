@@ -61,7 +61,7 @@ NONGEN_CXX_SRCS := $(shell find \
 	src/$(PROJECT) \
 	include/$(PROJECT) \
 	python/$(PROJECT) \
-	matlab/$(PROJECT) \
+	matlab/+$(PROJECT) \
 	examples \
 	tools \
 	-name "*.cpp" -or -name "*.hpp" -or -name "*.cu" -or -name "*.cuh")

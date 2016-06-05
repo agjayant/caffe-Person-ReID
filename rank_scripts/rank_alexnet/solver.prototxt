@@ -8,8 +8,8 @@ max_iter: 400000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 10000
-snapshot_prefix: "/home/xiaolonw/video_models/unsup_alexnet/video_"
+snapshot_prefix: "/home/jayant/caffe-video_triplet/rank_scripts/models/"
 solver_mode: GPU
-device_id: 4
+device_id: 0
 
 
