@@ -9,7 +9,7 @@ layer {
   }
   transform_param {
 	crop_size:64
-	mean_file: "/home/jayant/caffe-video_triplet/rank_scripts/market_train_mean.binaryproto"
+	mean_file: "/home/jayant/caffe-Person-ReID_triplet/rank_scripts/market_train_mean.binaryproto"
   }
   image_data_param {
     source: "/home/jayant/vision/Market-1501-v15.09.15/market_trainlist_50.txt"
