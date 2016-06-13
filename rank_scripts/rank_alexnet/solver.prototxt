@@ -2,12 +2,12 @@ net: "imagenet_train.prototxt"
 base_lr: 0.001
 lr_policy: "step"
 gamma: 0.1
-stepsize: 10000 
+stepsize: 100 
 display: 5
-max_iter: 50000
+max_iter: 1000
 momentum: 0.9
 weight_decay: 0.0005
-snapshot: 10000
+snapshot: 1000
 snapshot_prefix: "/home/jayant/caffe-video_triplet/rank_scripts/models1/"
 solver_mode: GPU
 device_id: 0
