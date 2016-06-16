@@ -67,56 +67,58 @@ images_list = os.listdir(query_folder)
 
 file1 = open('market_cmc.txt','w')
 
-for line in fileinput.input(sys.argv[2]):
-    net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
-                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
-                    caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
+with open(sys.argv[2]) as fp:	
+	for line in fp:
+	    net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
+	                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
+	                    caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
+	
+	    # set net to batch size of 100
+	    net.blobs['data'].reshape(100,3,64,64)
 
-    # set net to batch size of 100
-    net.blobs['data'].reshape(100,3,64,64)
-
-    query_image = caffe.io.load_image( query_folder + line )
-    net.blobs['data'].data[...] = transformer.preprocess('data', query_image)
-    out = net.forward()
-    vector_query = out['fc7']
-    #plt.figure(figsize=(3,3))
-    #plt.imshow(query_image)
-
-    #Paired list to hold (diff,imagePath)
-
-    Rank_list= []
-
-    #print images_list
-
-    for image in images_list:
-        new_net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
-                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
-                    caffe.TEST)
-        new_net.blobs['data'].reshape(100,3,64,64)
-        new_net.blobs['data'].data[...] = transformer.preprocess('data', caffe.io.load_image(query_folder + image))
-        output=new_net.forward()
-        vector_new=output['fc7']
-        diff = getDiff(vector_query, vector_new)
-
-        #add the pair (diff,image) to the list
-        Rank_list.append((diff,image))
-
-        #sort the list based on diff
-        Rank_list.sort()
-
-        #remove the last element if more than 'num_rank'
-        if len(Rank_list) > num_rank :
-            Rank_list.remove(Rank_list[len(Rank_list)-1])
-
-    file1.write(image_q)
-    file1.write(',')
-    
-    for item in Rank_list:
-        file1.write(item[1])
-        
-        if item is Rank_list[len(Rank_list)-1]:
-            file1.write('\n')
-        else:
-            file1.write(',')
-    
+	    image_q = line[:-1]	
+	    query_image = caffe.io.load_image( query_folder + image_q )
+	    net.blobs['data'].data[...] = transformer.preprocess('data', query_image)
+	    out = net.forward()
+	    vector_query = out['fc7']
+	    #plt.figure(figsize=(3,3))
+	    #plt.imshow(query_image)
+	
+	    #Paired list to hold (diff,imagePath)
+	
+	    Rank_list= []
+	
+	    #print images_list
+	
+	    for image in images_list:
+	        new_net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
+	                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
+	                    caffe.TEST)
+	        new_net.blobs['data'].reshape(100,3,64,64)
+	        new_net.blobs['data'].data[...] = transformer.preprocess('data', caffe.io.load_image(query_folder + image))
+	        output=new_net.forward()
+	        vector_new=output['fc7']
+	        diff = getDiff(vector_query, vector_new)
+	
+	        #add the pair (diff,image) to the list
+	        Rank_list.append((diff,image))
+	
+	        #sort the list based on diff
+	        Rank_list.sort()
+	
+	        #remove the last element if more than 'num_rank'
+	        if len(Rank_list) > num_rank :
+	            Rank_list.remove(Rank_list[len(Rank_list)-1])
+	
+	    file1.write(image_q)
+	    file1.write(',')
+	    
+	    for item in Rank_list:
+	        file1.write(item[1])
+	        
+	        if item is Rank_list[len(Rank_list)-1]:
+	            file1.write('\n')
+	        else:
+	            file1.write(',')
+	    
 file1.close()
