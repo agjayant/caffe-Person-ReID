@@ -18,6 +18,7 @@ layer {
     new_width: 64
     shuffle: true
     pair_size: 2
+    is_color: true
   }
 }
 
