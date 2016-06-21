@@ -14,7 +14,7 @@ import sys
 sys.path.insert(0, caffe_root + 'python')
 
 import caffe
-
+import fileinput
 #plt.rcParams['figure.figsize'] = (10, 10)
 #plt.rcParams['image.interpolation'] = 'nearest'
 #plt.rcParams['image.cmap'] = 'gray'
@@ -41,12 +41,12 @@ def getDiff( vector1, vector2 ):
 caffe.set_device(0)
 caffe.set_mode_gpu()
 net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
-                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
+                    caffe_root + 'rank_scripts/models10/_iter_600.caffemodel',
                     caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
 
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 transformer.set_transpose('data', (2,0,1))
-transformer.set_mean('data', np.load(caffe_root + 'rank_scripts/market_train_mean.npy').mean(1).mean(1)) # mean pixel
+transformer.set_mean('data', np.load(caffe_root + 'rank_scripts/market_query_mean_128x64.npy').mean(1).mean(1)) # mean pixel
 transformer.set_raw_scale('data', 255)  # the reference model operates on images in [0,255] range instead of [0,1]
 transformer.set_channel_swap('data', (2,1,0))  # the reference model has channels in BGR order instead of RGB
 
@@ -67,7 +67,7 @@ images_features = {}
 
 for image in images_list:
     net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
-                    caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
+                    caffe_root + 'rank_scripts/models10/_iter_600.caffemodel',
                     caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
 
     # set net to batch size of 100
@@ -89,7 +89,12 @@ for image in images_list:
 
 file1 = open('market_cmc.txt','w')
 
-for image_q in images_list:
+images_set= []
+
+for line in fileinput.input('query_set.txt'):
+	images_set.append(line[:-1])
+
+for image_q in images_set:
     
     vector_query = images_features[image_q]
     #plt.figure(figsize=(3,3))
