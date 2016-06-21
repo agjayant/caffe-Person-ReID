@@ -8,7 +8,6 @@ layer {
     phase: TRAIN
   }
   transform_param {
-	crop_size:64
 	mean_file: "/home/jayant/caffe-Person-ReID_triplet/rank_scripts/market_train_mean.binaryproto"
   }
   image_data_param {
