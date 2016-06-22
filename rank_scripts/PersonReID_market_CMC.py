@@ -27,11 +27,11 @@ import os
 #getDiff Implementation
 def getDiff( vector1, vector2 ):
     sum=0
-    for i in range(50):
-        for j in range(1024):
-            diff= vector1[i][j]-vector2[i][j]
-            diff=diff*diff
-            sum=sum+diff
+
+    for j in range(1024):
+        diff= vector1[j]-vector2[j]
+        diff=diff*diff
+        sum=sum+diff
         
     return math.sqrt(sum)
 
@@ -71,13 +71,13 @@ for image in images_list:
                     caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
 
     # set net to batch size of 100
-    net.blobs['data'].reshape(100,3,64,64)
+    net.blobs['data'].reshape(50,3,64,64)
 
     query_image_path = 'rank_scripts/images_market/' + image
     query_image = caffe.io.load_image(caffe_root + query_image_path)
     net.blobs['data'].data[...] = transformer.preprocess('data', query_image)
     out = net.forward()
-    images_features[image]=out['fc7']
+    images_features[image]=out['fc7'][0]
 
 
 # In[18]:

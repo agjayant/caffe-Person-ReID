@@ -46,8 +46,8 @@ transformer.set_channel_swap('data', (2,1,0))  # the reference model has channel
 
 # In[19]:
 
-# set net to batch size of 100
-net.blobs['data'].reshape(100,3,64,64)
+# set net to batch size
+net.blobs['data'].reshape(50,3,64,64)
 
 
 # In[20]:
@@ -57,7 +57,7 @@ query_image_path = sys.argv[1]
 query_image = caffe.io.load_image(query_image_path)
 net.blobs['data'].data[...] = transformer.preprocess('data', query_image)
 out = net.forward()
-vector_query = out['fc7']
+vector_query = out['fc7'][0]
 
 #plt.figure(figsize=(3,3))
 #plt.imshow(query_image)
@@ -73,11 +73,11 @@ vector_query = out['fc7']
 #getDiff Implementation
 def getDiff( vector1, vector2 ):
     sum=0
-    for i in range(50):
-        for j in range(1024):
-            diff= vector1[i][j]-vector2[i][j]
-            diff=diff*diff
-            sum=sum+diff
+ 
+    for j in range(1024):
+        diff= vector1[j]-vector2[j]
+        diff=diff*diff
+        sum=sum+diff
         
     return math.sqrt(sum)
 
@@ -104,10 +104,10 @@ for image in images_list:
     new_net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
                 caffe_root + 'rank_scripts/models2/_iter_1000.caffemodel',
                 caffe.TEST)
-    new_net.blobs['data'].reshape(100,3,64,64)
+    new_net.blobs['data'].reshape(50,3,64,64)
     new_net.blobs['data'].data[...] = transformer.preprocess('data', caffe.io.load_image(query_folder + image))
     output=new_net.forward()
-    vector_new=output['fc7']
+    vector_new=output['fc7'][0]
     diff = getDiff(vector_query, vector_new)
     
     #add the pair (diff,image) to the list
