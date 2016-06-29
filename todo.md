@@ -8,3 +8,7 @@
 
 1. mAP scripts
 2. Faster and better scripts for CMC.
+
+#Scripts
+
+1. Add command line arguments to all sripts.
