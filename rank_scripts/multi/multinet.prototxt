@@ -288,7 +288,7 @@ layer {
   }
 }
 
-l
+
 layer {
   name: "fc6_a"
   type: "InnerProduct"
