@@ -439,7 +439,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 1000
+    num_output: 1000 ################## 105 for PETA dataset ###check once
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -460,7 +460,10 @@ layer {
 
 ######################################## (Norm Layer) (Yes/No)
 
+######################################## Softmax (Yes/No)
+
 ######################################### Sigmoid Cross Entropy Loss 
+
 
 layer {
   name: "loss"
