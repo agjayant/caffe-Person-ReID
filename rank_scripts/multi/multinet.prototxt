@@ -4,6 +4,7 @@ layer {
   type: "ImageData"
   top: "data"
   top: "label"
+  top: "attributes"
   include {
     phase: TRAIN
   }
@@ -424,7 +425,6 @@ layer{
 
 }
 
-############################################ Check this for Attributes
 layer {
   name: "fc8_a"
   type: "InnerProduct"
@@ -439,7 +439,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 1000 ################## 105 for PETA dataset ###check once
+    num_output: 105
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -450,19 +450,13 @@ layer {
     }
   }
 }
-layer {
-  name: "relu8_a"
-  type: "ReLU"
-  bottom: "fc8_a"
-  top: "fc8_a"
+
+layer{
+	name: "loss_a"
+	type: "SigmoidCrossEntropyLoss"
+	bottom: "fc8_a"
+	bottom: "attributes"
 }
-######################################## Dropout (Yes/No)
-
-######################################## (Norm Layer) (Yes/No)
-
-######################################## Softmax (Yes/No)
-
-######################################### Sigmoid Cross Entropy Loss 
 
 
 layer {
