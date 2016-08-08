@@ -22,6 +22,28 @@ layer {
   }
 }
 
+############ HDF5_Data for attributes input
+layer{
+	name:"data"
+	type: "HDF5Data"
+	top: "data"
+	top: "attri_label"
+	include{
+		phase:TRAIN
+	}	
+	hdf5_data_param{
+		source : ## path to text file
+		batch_size: 50 #or 100	
+	}
+############transformation has to be done from before
+########## figure out how to feed colored images
+############ pair_size
+
+}
+
+############something to split attri_label into "attributes" and "label"
+
+
 
 layer {
   name: "conv1"
