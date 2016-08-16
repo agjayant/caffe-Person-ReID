@@ -14,6 +14,7 @@ import sys
 sys.path.insert(0, caffe_root + 'python')
 
 import caffe
+import fileinput
 
 #plt.rcParams['figure.figsize'] = (10, 10)
 #plt.rcParams['image.interpolation'] = 'nearest'
@@ -66,7 +67,7 @@ images_list = os.listdir(query_folder)
 
 file1 = open('market_cmc.txt','w')
 
-for image_q in images_list:
+for line in fileinput.input(sys.argv[2]):
     net = caffe.Net(caffe_root +  'examples/_temp/unsup_net_deploy.prototxt',
                     caffe_root + 'rank_scripts/models2/_iter_100.caffemodel',
                     caffe.TEST)# input preprocessing: 'data' is the name of the input blob == net.inputs[0]
@@ -74,7 +75,7 @@ for image_q in images_list:
     # set net to batch size of 100
     net.blobs['data'].reshape(100,3,64,64)
 
-    query_image = caffe.io.load_image( query_folder + image_q )
+    query_image = caffe.io.load_image( query_folder + line )
     net.blobs['data'].data[...] = transformer.preprocess('data', query_image)
     out = net.forward()
     vector_query = out['fc7']
