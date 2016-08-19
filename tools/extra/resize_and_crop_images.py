@@ -10,14 +10,14 @@ gflags.DEFINE_string('image_lib', 'opencv',
                      'OpenCV or PIL, case insensitive. The default value is the faster OpenCV.')
 gflags.DEFINE_string('input_folder', '',
                      'The folder that contains all input images, organized in synsets.')
-gflags.DEFINE_integer('output_side_length', 256,
+gflags.DEFINE_integer('output_side_length', 128,
                      'Expected side length of the output image.')
 gflags.DEFINE_string('output_folder', '',
                      'The folder that we write output resized and cropped images to')
 FLAGS = gflags.FLAGS
 
 class OpenCVResizeCrop:
-    def resize_and_crop_image(self, input_file, output_file, output_side_length = 256):
+    def resize_and_crop_image(self, input_file, output_file, output_side_length = 128):
         '''Takes an image name, resize it and crop the center square
         '''
         img = cv2.imread(input_file)
@@ -37,7 +37,7 @@ class OpenCVResizeCrop:
 
 class PILResizeCrop:
 ## http://united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/
-    def resize_and_crop_image(self, input_file, output_file, output_side_length = 256, fit = True):
+    def resize_and_crop_image(self, input_file, output_file, output_side_length = 128, fit = True):
         '''Downsample the image.
         '''
         img = Image.open(input_file)

@@ -1,49 +1,18 @@
 name: "MultiNet" 
-layer {
-  name: "data"
-  type: "ImageData"
-  top: "data"
-  top: "label"
-  top: "attributes"
-  include {
-    phase: TRAIN
-  }
-  transform_param { 
-    mean_file: "/home1/agjayant/caffe-PersonReID/rank_scripts/train_256x128_market.binaryproto"
-  }
-  image_data_param {
-    source:  "/home1/agjayant/Market-1501-v15.09.15/market_trainlist.txt"
-    batch_size: 50
-    new_height: 256
-    new_width: 128
-    shuffle: true
-    is_color: true
-    pair_size: 2
-  }
-}
-
-############ HDF5_Data for attributes input
 layer{
 	name:"data"
 	type: "HDF5Data"
 	top: "data"
-	top: "attri_label"
+	top: "label"
+	top: "attributes"
 	include{
 		phase:TRAIN
 	}	
 	hdf5_data_param{
-		source : ## path to text file
-		batch_size: 50 #or 100	
+		source : "/home/jayant/caffe-Person-ReID_triplet/rank_scripts/multi/path_hdf5.txt" 
+		batch_size: 50 
 	}
-############transformation has to be done from before
-########## figure out how to feed colored images
-############ pair_size
-
 }
-
-############something to split attri_label into "attributes" and "label"
-
-
 
 layer {
   name: "conv1"
@@ -386,16 +355,6 @@ layer {
   top: "fc7"
 }
 
-layer{
- name: "drop7"
- type: "Dropout"
- bottom: "fc7"
- top: "fc7"
- dropout_param{
-    dropout_ratio: 0.5
- }
-
-}
 
 layer {
   name: "norml2"
@@ -461,7 +420,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 105
+    num_output: 106
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -472,6 +431,7 @@ layer {
     }
   }
 }
+
 
 layer{
 	name: "loss_a"
