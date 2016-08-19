@@ -8,7 +8,7 @@ max_iter: 1000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 1000
-snapshot_prefix: "/home/jayant/caffe-video_triplet/rank_scripts/models1/"
+snapshot_prefix: "/home/jayant/caffe-Person-ReID_triplet/rank_scripts/models1/"
 solver_mode: GPU
 device_id: 0
 

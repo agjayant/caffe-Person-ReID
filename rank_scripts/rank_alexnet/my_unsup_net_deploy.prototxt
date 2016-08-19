@@ -1,9 +1,9 @@
 name: "UnsupNet"
 input: "data"
 input_shape {
-  dim: 100
+  dim: 50
   dim: 3
-  dim: 128
+  dim: 256
   dim: 128
 }
 
@@ -290,10 +290,5 @@ layer {
     }
   }
 }
-layer {
-  name: "relu7"
-  type: "ReLU"
-  bottom: "fc7"
-  top: "fc7"
-}
+
 
