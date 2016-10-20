@@ -1,5 +1,0 @@
-multinet: 0.05 ~ 43 (10000);
-                                    sharenet: 0.02 ~ 66 (15000) 67 (30000)
-multinet: 0.01 ~ 61 (10000);        sharenet:75(30000) 74(15000) sharenet2: 71(30000)
-multinet: 0.005 ~ 66  (10000);      sharenet ~ 73(15000) 74(30000) sharenet2: 68(30000) 69(15000)
-multinet : 0 ~ 76 (10000)(triplet)
