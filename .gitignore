@@ -1,0 +1,14 @@
+python/caffe/
+.build_release/
+.ipynb_checkpoints/
+ReID/.ipynb_checkpoints/
+build
+*.png
+examples/
+tags
+ReID/market_query/
+ReID/rank_lists/
+ReID/results_cmc/
+ReID/check_images/
+ReID/images_market/
+ReID/mean_files/
