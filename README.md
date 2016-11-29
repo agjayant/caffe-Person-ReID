@@ -3,9 +3,9 @@
 
 The code is based on Caffe for the problem of Person Re-Identification. 
 
-##Sample Results 
+##Some Sample Results 
 
-Following Retreival Results are obtained using features extracted from our model.
+Following Retreival Results were obtained using features extracted from our model.
 
 ###Market-1501
 
