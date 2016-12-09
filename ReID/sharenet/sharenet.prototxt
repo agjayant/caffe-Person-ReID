@@ -1,4 +1,4 @@
-name: "MultiNet" 
+name: "sharenet" 
 layer{
 	name:"data"
 	type: "HDF5Data"
@@ -9,8 +9,9 @@ layer{
 		phase:TRAIN
 	}	
 	hdf5_data_param{
-		source : "/home/jayant/caffe-Person-ReID_triplet/rank_scripts/multi/path_hdf5.txt" 
+		source : "/users/gpu/agjayant1/caffe-PersonReID/ReID/sharenet/path_hdf5.txt" 
 		batch_size: 100 
+       # shuffle : true
 	}
 }
 
@@ -348,12 +349,12 @@ layer {
   }
 }
 
-
 layer{
 	name: "loss_a"
 	type: "SigmoidCrossEntropyLoss"
 	bottom: "fc8_a"
 	bottom: "attributes"
+    top : "loss_a"
 	loss_weight : 0.01
 }
 
@@ -370,5 +371,6 @@ layer {
   }
   bottom: "norml2"
   bottom: "label"
+  top : "loss"
 }
 
