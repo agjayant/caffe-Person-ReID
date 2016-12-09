@@ -1,4 +1,4 @@
-name: "sharenet" 
+name: "concatnet" 
 layer{
 	name:"data"
 	type: "HDF5Data"
@@ -349,6 +349,26 @@ layer {
   }
 }
 
+
+layer {
+  name: "norml2A"
+  type: "Norm"
+  bottom: "fc8_a"
+  top: "norml2A"
+}
+
+
+layer {
+    name: "concat"
+    bottom: "norml2"
+    bottom: "norml2A"
+    top: "featAtr"
+    type: "Concat"
+    concat_param{
+        axis: 1
+    }
+}
+
 layer{
 	name: "loss_a"
 	type: "SigmoidCrossEntropyLoss"
@@ -369,7 +389,7 @@ layer {
     rand_ratio: 0.5
     margin: 0.5
   }
-  bottom: "norml2"
+  bottom: "featAtr"
   bottom: "label"
   top : "loss"
 }
