@@ -20,27 +20,7 @@ sys.path.insert(0, caffe_root + 'python')
 import caffe
 import fileinput
 
-#plt.rcParams['figure.figsize'] = (10, 10)
-#plt.rcParams['image.interpolation'] = 'nearest'
-#plt.rcParams['image.cmap'] = 'gray'
-
 import os
-
-
-# In[3]:
-
-#getDiff Implementation
-def getDiff( vector1, vector2 ):
-    sum=0
-    for j in range(len(vector1)):
-        diff= vector1[j]-vector2[j]
-        diff=diff*diff
-        sum=sum+diff
-
-    return math.sqrt(sum)
-
-
-# In[4]:
 
 
 # In[9]:
@@ -65,15 +45,10 @@ transformer.set_channel_swap('data', (2,1,0))  # the reference model has channel
 
 # In[ ]:
 
+# In[5]:
 image_data = []
 label = []
 attributes = []
-
-
-# In[ ]:
-
-# In[5]:
-
 #******************************
 #Forward Pass for  Test Folder
 #******************************
@@ -112,7 +87,12 @@ while j < 5000:
         A = np.array(pic,dtype='f4')
         A = A.transpose((2,0,1))
         image_data.append(A)
-        attributes.append(out['fc8_a'][i])
+        a = out['fc8_a'][i]
+        b =  sorted(range(len(a)), key=lambda x: a[x])[-20:]
+        d = [0] * 106
+        D= np.array(d)
+        D[b] = 1
+        attributes.append(D)
         label.append(int(item.split('_')[0]))
         i = i + 1
         k = k + 1
@@ -125,7 +105,7 @@ print "Forward Pass Completed for all Test Images: Part 1"
 print "**************************************************"
 label = np.array(label,dtype='f4')
 attributes = np.array(attributes,dtype='f4')
-h = h5py.File("market_training1.h5", 'w' )
+h = h5py.File("/users/gpu/agjayant/Market-1501-v15.09.15/market_training1.h5", 'w' )
 dset1 = h.create_dataset("data", data=image_data)
 dset2 = h.create_dataset("attributes", data=attributes)
 dset3 = h.create_dataset("label",  data=label)
@@ -138,6 +118,9 @@ print "**************************************************"
 
 # In[ ]:
 
+image_data = []
+label = []
+attributes = []
 while j < 10000:
     net = caffe.Net(sys.argv[1], # deploy prototxt,
                 sys.argv[2], # model,
@@ -161,7 +144,12 @@ while j < 10000:
         A = np.array(pic,dtype='f4')
         A = A.transpose((2,0,1))
         image_data.append(A)
-        attributes.append(out['fc8_a'][i])
+        a = out['fc8_a'][i]
+        b =  sorted(range(len(a)), key=lambda x: a[x])[-20:]
+        d = [0] * 106
+        D= np.array(d)
+        D[b] = 1
+        attributes.append(D)
         label.append(int(item.split('_')[0]))
         i = i + 1
         k = k + 1
@@ -174,7 +162,7 @@ print "Forward Pass Completed for all Test Images : 2"
 print "******************************************"
 label = np.array(label,dtype='f4')
 attributes = np.array(attributes,dtype='f4')
-h = h5py.File("market_training2.h5", 'w' )
+h = h5py.File("/users/gpu/agjayant/Market-1501-v15.09.15/market_training2.h5", 'w' )
 dset1 = h.create_dataset("data", data=image_data)
 dset2 = h.create_dataset("attributes", data=attributes)
 dset3 = h.create_dataset("label",  data=label)
@@ -187,6 +175,9 @@ print "**************************************************"
 
 # In[ ]:
 
+image_data = []
+label = []
+attributes = []
 while j < num_images:
     net = caffe.Net(sys.argv[1], # deploy prototxt,
                 sys.argv[2], # model,
@@ -210,7 +201,12 @@ while j < num_images:
         A = np.array(pic,dtype='f4')
         A = A.transpose((2,0,1))
         image_data.append(A)
-        attributes.append(out['fc8_a'][i])
+        a = out['fc8_a'][i]
+        b =  sorted(range(len(a)), key=lambda x: a[x])[-20:]
+        d = [0] * 106
+        D= np.array(d)
+        D[b] = 1
+        attributes.append(D)
         label.append(int(item.split('_')[0]))
         i = i + 1
         k = k + 1
@@ -223,7 +219,7 @@ print "Forward Pass Completed for all Test Images:3"
 print "******************************************"
 label = np.array(label,dtype='f4')
 attributes = np.array(attributes,dtype='f4')
-h = h5py.File("market_training3.h5", 'w' )
+h = h5py.File("/users/gpu/agjayant/Market-1501-v15.09.15/market_training3.h5", 'w' )
 dset1 = h.create_dataset("data", data=image_data)
 dset2 = h.create_dataset("attributes", data=attributes)
 dset3 = h.create_dataset("label",  data=label)
