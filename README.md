@@ -3,11 +3,11 @@
 
 The code is based on Caffe for the problem of Person Re-Identification. 
 
-##Some Sample Results 
+## Some Sample Results 
 
 Following Retreival Results were obtained using features extracted from our model.
 
-###Market-1501
+### Market-1501
 
 Query | Retreived Images |
 ------| ---------------  |
