@@ -1,12 +1,11 @@
-name: "MultiNet" 
+name: "triplet" 
 input: "data"
 input_shape{
-  dim: 1
-  dim: 3
-  dim: 227
-  dim: 227
+    dim:100
+    dim:3
+    dim:227
+    dim:227
 }
-
 layer {
   name: "conv1"
   type: "Convolution"
@@ -231,13 +230,11 @@ layer {
   }
 }
 
-
-
 layer {
-  name: "fc6_a"
+  name: "fc6"
   type: "InnerProduct"
   bottom: "pool5"
-  top: "fc6_a"
+  top: "fc6"
   param {
     lr_mult: 1
     decay_mult: 1
@@ -259,18 +256,19 @@ layer {
   }
 }
 layer {
-  name: "relu6_a"
+  name: "relu6"
   type: "ReLU"
-  bottom: "fc6_a"
-  top: "fc6_a"
+  bottom: "fc6"
+  top: "fc6"
 }
 
 
+
 layer {
-  name: "fc7_a"
+  name: "fc7"
   type: "InnerProduct"
-  bottom: "fc6_a"
-  top: "fc7_a"
+  bottom: "fc6"
+  top: "fc7"
   param {
     lr_mult: 1
     decay_mult: 1
@@ -281,38 +279,6 @@ layer {
   }
   inner_product_param {
     num_output: 4096
-    weight_filler {
-      type: "gaussian"
-      std: 0.005
-    }
-    bias_filler {
-      type: "constant"
-      value: 1
-    }
-  }
-}
-layer {
-  name: "relu7_a"
-  type: "ReLU"
-  bottom: "fc7_a"
-  top: "fc7_a"
-}
-
-layer {
-  name: "fc8_a"
-  type: "InnerProduct"
-  bottom: "fc7_a"
-  top: "fc8_a"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
-  inner_product_param {
-    num_output: 106
     weight_filler {
       type: "gaussian"
       std: 0.005
