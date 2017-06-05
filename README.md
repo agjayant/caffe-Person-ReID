@@ -16,4 +16,5 @@ Query | Retreived Images |
 ![](ReID/sampleResults/0016_c1s1_001351_00.jpg) | ![](ReID/sampleResults/0455_c5s1_116245_02.jpg)  ![](ReID/sampleResults/0016_c6s1_011551_01.jpg)  ![](ReID/sampleResults/0473_c5s1_123020_00.jpg) ![](ReID/sampleResults/0646_c5s2_033930_02.jpg) ![](ReID/sampleResults/1395_c5s3_048415_02.jpg)  ![](ReID/sampleResults/0302_c5s1_067748_03.jpg) ![](ReID/sampleResults/0388_c5s1_091548_01.jpg) ![](ReID/sampleResults/1077_c5s2_144199_02.jpg)   |
 
 *Currently, this repo contains only baseline codes, full version containing our model will be released soon.
+
 *Base Code for Triplet loss layer taken from [caffe-video_triplet](https://github.com/xiaolonw/caffe-video_triplet).
